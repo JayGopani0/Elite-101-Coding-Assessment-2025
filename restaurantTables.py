@@ -43,3 +43,101 @@ restaurant_tables2 = [
     [5,        'o',      'x',      'o',      'x',      'o',      'o'],
     [6,        'o',      'o',      'o',      'o',      'x',      'o']
 ]
+
+
+""" 
+Level 1 - listing all tables that are currently free
+We first have to traverse the 2d list by row to determine which timeslots are open for the specific table before
+moving on to the next table. We then traverse by column to the next table before doing the same procedure. This should be done using 
+a nested for loop to traverse both at the same time.
+We also create a blank list to put all the information into it and return at the end of the code
+"""
+def free_tables(tables):  # taking the table parameter so that the code can work for any table
+    free_tables = [] # list to hold information 
+    for table_num in range(1, len(tables[0])):  # Iterate through columns (tables)
+        statement = ""   # statement to append to list
+        statement += ("Table " + str(tables[0][table_num]) + " at timeslot ")
+        for timeslot in range(1, len(tables)):  # Iterate through rows (timeslots)
+            if tables[timeslot][table_num] == "x":
+                continue
+            else:
+               statement += (str(tables[timeslot][0]) + " ")
+        free_tables.append(statement)
+    return free_tables
+
+# print(free_tables(restaurant_tables2))
+
+
+"""
+Level 2 - Party Size
+We have to find a single table that can fit the part size. In order to do so, we should check the columns of tables that are greater
+than or equal to the party size and then check the available time slots before returning the table. This needs a nested for loop like the 
+previous level but with an embedded if statement to skip the tables that don't have the necessary capacity
+
+"""
+
+
+
+def party_size(tables):
+    size = int(input("What is your party size? "))
+    for table_num in range(1, len(tables[0])):  # Iterate through columns (tables)
+        table_size = int((tables[0][table_num])[3]) # Finds the capacity of the table by getting the 4th character and making it an integer
+        if table_size < size: # to determine if the table can hold the amount of guests
+            continue # moves to the next table if it cannot
+        else: 
+            for timeslot in range(1, len(tables)):  # Iterate through rows (timeslots)
+                if tables[timeslot][table_num] == "o":
+                    return "Table " + str(tables[0][table_num]) + " is avaiable at timeslot " + str(tables[timeslot][0])
+
+
+# print(party_size(restaurant_tables2))
+
+
+"""
+Level 3 - Party size AND all are free
+Also similar to the previous levels, this will find which tables are free and fit the capacity, not just returning the first table it finds.
+Similar code to the level 2 program will be used with changes to how the information is stored.
+
+"""
+
+def all_party_size(tables):
+    all_free_tables = [] # Used to store all info
+    size = int(input("What is your party size? "))
+    for table_num in range(1, len(tables[0])):  # Iterate through columns (tables)
+        table_size = int((tables[0][table_num])[3]) # Finds the capacity of the table by getting the 4th character and making it an integer
+        if table_size < size: # to determine if the table can hold the amount of guests
+            continue # moves to the next table if it cannot
+        else: 
+            for timeslot in range(1, len(tables)):  # Iterate through rows (timeslots)
+                if tables[timeslot][table_num] == "o": 
+                    all_free_tables.append("Table " + str(tables[0][table_num]) + " is avaiable at timeslot " + str(tables[timeslot][0])) # adds to the list to later be returned
+    return all_free_tables
+
+# print(all_party_size(restaurant_tables2))
+
+
+
+"""
+Level 4 - Adjacent Seats
+
+"""
+
+def adjacency(tables):
+    adjacency_combos = [] # Used to store all info
+    size = int(input("What is your party size? "))
+    for table_num in range(1, len(tables[0])):  # Iterate through columns (tables)
+        table_size = int((tables[0][table_num])[3]) # Finds the capacity of the table by getting the 4th character and making it an integer
+        if table_size < size: # to determine if the table can hold the amount of guests
+            for timeslot in range(1, len(tables)):  # Iterate through rows (timeslots)
+                if tables[timeslot][table_num] == "o": 
+                    if tables[timeslot][table_num+1] == "o":
+                        table_size += int((tables[0][table_num+1])[3])
+                        if table_size >= size:
+                            adjacency_combos.append((str(tables[0][table_num]) + " and " +  str(tables[0][table_num+1]) + " can fit the party"))
+                    
+        else: 
+            continue
+            
+    return adjacency_combos
+
+print(adjacency(restaurant_tables2))
