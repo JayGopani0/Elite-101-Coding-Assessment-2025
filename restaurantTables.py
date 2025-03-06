@@ -65,7 +65,7 @@ def free_tables(tables):  # taking the table parameter so that the code can work
         free_tables.append(statement)
     return free_tables
 
-# print(free_tables(restaurant_tables2))
+print(free_tables(restaurant_tables2))
 
 
 """
@@ -90,7 +90,7 @@ def party_size(tables):
                     return "Table " + str(tables[0][table_num]) + " is avaiable at timeslot " + str(tables[timeslot][0])
 
 
-# print(party_size(restaurant_tables2))
+print(party_size(restaurant_tables2))
 
 
 """
@@ -113,12 +113,15 @@ def all_party_size(tables):
                     all_free_tables.append("Table " + str(tables[0][table_num]) + " is avaiable at timeslot " + str(tables[timeslot][0])) # adds to the list to later be returned
     return all_free_tables
 
-# print(all_party_size(restaurant_tables2))
+print(all_party_size(restaurant_tables2))
 
 
 
 """
 Level 4 - Adjacent Seats
+Using the same code from level 3, I took the same idea but instead changed the if statement so that it took on the path whwere the party
+size was greater than the table size so that we can find out if adjacent tables were able to connect and create a bigger table for the part
+The information is stored in the same way and printed the same as well. 
 
 """
 
